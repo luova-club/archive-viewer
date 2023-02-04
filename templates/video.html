@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block main %}
+<head>
+    <link href="https://vjs.zencdn.net/8.0.3/video-js.css" rel="stylesheet" />
+
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+</head>
+
+<style>
+    h1
+    {
+        font-family: 'Helvetica', 'Arial', sans-serif;
+    }
+    button {
+        border: none;
+        outline: none;
+    }
+</style>
+
+<script>
+    function play_video()
+{
+  document.getElementById("my-video").play();
+} 
+    function pause_video()
+{
+    document.getElementById("my-video").pause();
+}
+</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+    <center><h1>{{title}}</h1></center>
+    <center><video id="my-video" class="video-js" preload="auto" width="50%" height="50%" poster="{{poster}}"
+        data-setup="{}">
+        <source src="videos/{{video}}" type="video/mp4" />
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </video>
+    <br>
+    <button class="button" onclick="play_video();"><span class="material-symbols-rounded">
+        play_circle
+        </span></button>
+    <button class="button" onclick="pause_video();"><span class="material-symbols-rounded">stop_circle</span></button>
+</center>
+
+    <script src="https://vjs.zencdn.net/8.0.3/video.min.js"></script>
+{% endblock %}
