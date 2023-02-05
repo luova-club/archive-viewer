@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+<center>
+<h1>Lista kaikista arkistossa olevista materiaaleista:</h1>
+</center>
+{% for item in items %}
+<center>
+<a href="{{item.url}}">
+    {{item.name}}
+</a>
+</center>
+<br>
+{% endfor %}
+
+{% endblock %}
