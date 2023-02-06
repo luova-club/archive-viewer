@@ -1,49 +1,112 @@
-from flask import Flask, send_file, render_template
+from flask import Flask, send_file, render_template, abort
+
+import flask
 
 import json
 
+from models import item
+from info import get_data, load_data, load_items
+import flask_login
+
 app = Flask(__name__)
 
-class item_class():
-    def __init__(self, name, url):
-        self.name = name
-        self.url = url
+login_manager = flask_login.LoginManager()
 
-def load_title(video_name):
-    with open("info.json", "r") as f:
-        data = json.load(f)
+login_manager.init_app(app)
 
-    try:
-        return data[video_name]["title"], data[video_name]["poster"]
+with open("users.json", "r") as f:
+    users = json.load(f)
 
-    except IndexError:
-        return "Not Available"
+
+class User(flask_login.UserMixin):
+    pass
+
+
+@login_manager.user_loader
+def user_loader(email):
+    if email not in users:
+        return
+
+    user = User()
+    user.id = email
+    return user
+
+
+@login_manager.request_loader
+def request_loader(request):
+    email = request.form.get('email')
+    if email not in users:
+        return
+
+    user = User()
+    user.id = email
+    return user
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if flask.request.method == 'GET':
+        return render_template("login.html")
+
+    email = flask.request.form['email']
+    if email in users and flask.request.form['password'] == users[email]['password']:
+        user = User()
+        user.id = email
+        flask_login.login_user(user)
+        return flask.redirect(flask.url_for('protected'))
+
+    return 'Bad login'
+
+
+@app.route('/protected')
+@flask_login.login_required
+def protected():
+    return 'Logged in as: ' + flask_login.current_user.id
+
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return 'Logged out'
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized', 401
 
 
 @app.route("/")
 def index():
     return render_template("index.html")
-@app.route("/<video_name>")
-def videot(video_name):
-    title, poster = load_title(video_name)
-    return render_template("video.html", title=title, video=video_name, poster=poster)
+
+
+@app.route("/<item_id>")
+@flask_login.login_required
+def videot(item_id):
+    data = get_data(item_id)
+    if data.type == "video":
+        return render_template(f"video.html", data=data)
+
+    elif data.type == "photo":
+        return render_template(f"photo.html", data=data)
+
+    else:
+        abort(403)
+
 
 @app.route("/list")
 def list():
-    with open("info.json", "r") as f:
-        data = json.load(f)
-    items = []
-
-    for item in data:
-        item_object = item_class(data[item]["title"], item)
-        items.append(item_object)
+    items = load_items()
 
     return render_template("list.html", items=items)
-    
 
 
-@app.route("/videos/<video_name>")
-def video(video_name):
-    return send_file(video_name)
+@app.route("/files/<itemId>")
+@flask_login.login_required
+def video(itemId):
+    data = get_data(itemId)
+
+    return send_file(data.path)
+
 
 app.run()
