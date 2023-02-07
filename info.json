@@ -1,1 +1,9 @@
-{"latest_id": 0, "0": {"type": "video", "owner": "YLE", "title": "this is title", "path": "/path/to/file"}}
+{
+    "latest_id": 0,
+    "0": {
+        "type": "video",
+        "owner": "YLE",
+        "title": "this is title",
+        "path": "/path/to/file"
+    }
+}

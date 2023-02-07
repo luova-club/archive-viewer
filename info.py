@@ -18,14 +18,13 @@ def load_items() -> list:
     for item in data:
         if item == "latest_id":
             continue
-        items.append(get_data(item))
+
+        items.append(get_data(data, item))
 
     return items
 
 
-def get_data(itemId) -> dict:
-    data = load_data()
-
+def get_data(data, itemId) -> dict:
     type = data[itemId]["type"]
     owner = data[itemId]["owner"]
     title = data[itemId]["title"]

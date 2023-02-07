@@ -101,6 +101,13 @@ def list():
     return render_template("list.html", items=items)
 
 
+@app.route("/items")
+def items():
+    items = load_items()
+
+    return render_template("gallery.html", items=items)
+
+
 @app.route("/files/<itemId>")
 @flask_login.login_required
 def video(itemId):

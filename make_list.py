@@ -34,11 +34,16 @@ def look(dir_path, images, videos):
 look(dir_path, images, videos)
 
 
-def create(type, id, file):
-    item = create_data(type, 'Unknown', f'{type}_{id}', file)
+def create(type, id, file, title=""):
+    if title == "":
+        title = f'{type}_{id}'
+    item = create_data(type, 'Unknown', title, file)
 
     new_path = file.split("/").replace(file.split(".")[-2], item.itemId)
-    os.rename(file, new_path)
+    try:
+        os.rename(file, new_path)
+    except FileNotFoundError:
+        return
 
     change_data(item.itemId, new_path)
 
@@ -50,6 +55,6 @@ for image in images:
 
 
 for video in videos:
-    create("video", VIDEO_ID, video)
+    create("video", VIDEO_ID, video, title=video)
 
     VIDEO_ID += 1

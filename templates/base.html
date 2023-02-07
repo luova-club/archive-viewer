@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html>
- <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width">
-   <title>LuovaClub arkisto</title>
-     <style>
-    body
-    {
-        font-family: 'Helvetica', 'Arial', sans-serif;
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>LuovaClub arkisto</title>
+  <style>
+    body {
+      font-family: 'Helvetica', 'Arial', sans-serif;
     }
+
     html {
-    position: relative;
-    min-height: 100%;
-}
+      position: relative;
+      min-height: 100%;
+    }
 
     body {
-        margin: 0 0 100px;
-        /* bottom = footer height */
-        padding: 25px;
+      margin: 0 0 100px;
+      /* bottom = footer height */
+      padding: 25px;
     }
+
     footer {
-    background-color: orange;
-    position: absolute;
-    font-family: 'Helvetica', 'Arial', sans-serif;
-    font-weight: 600;
-    left: 0;
-    bottom: 0;
-    height: 100px;
-    width: 100%;
-    overflow: hidden;
+      background-color: orange;
+      position: absolute;
+      font-family: 'Helvetica', 'Arial', sans-serif;
+      font-weight: 600;
+      left: 0;
+      bottom: 0;
+      height: 100px;
+      width: 100%;
+      overflow: hidden;
     }
-    </style>
-   <script>
-     function todayDate(){
-        var d = new Date();
-        var n = d.getFullYear() + "  ";
-        return document.getElementById("date").innerHTML = n;
-      }
-   </script>
- </head>
- <body onload=todayDate()>
-    {% block main %}
-    {% endblock %}
-   <footer>
+  </style>
+  <script>
+    function todayDate() {
+      var d = new Date();
+      var n = d.getFullYear() + "  ";
+      return document.getElementById("date").innerHTML = n;
+    }
+  </script>
+</head>
+
+<body onload=todayDate()>
+  {% block main %}
+  {% endblock %}
+  <footer>
     <center>
       &copy; <a id="date"></a>LuovaClub
     </center>
-    </footer>
- </body>
+  </footer>
+</body>
+
 </html>
