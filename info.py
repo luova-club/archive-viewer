@@ -38,12 +38,11 @@ def get_data(data, itemId) -> dict:
 def create_data(type, owner, title, path) -> item:
     data = load_data()
 
-    data["latest_id"] = int(data["latest_id"])+1
+    data["latest_id"] = int(data["latest_id"]) + 1
 
     latest_id = data["latest_id"]
 
-    data[latest_id] = {"type": type, "owner": owner,
-                       "title": title, "path": path}
+    data[latest_id] = {"type": type, "owner": owner, "title": title, "path": path}
 
     item_model = item(latest_id, type, owner, title, path)
 

@@ -5,7 +5,7 @@ from info import create_data, change_data
 import json
 
 # folder path
-dir_path = r'/mnt/volume-hel1-1/'
+dir_path = r"/mnt/volume-hel1-1/"
 
 images = []
 
@@ -33,11 +33,18 @@ def look(dir_path, images, videos):
             if not path.split(".")[-1] in ["png", "jpg", "jpeg", "mp4", "mkv"]:
                 continue
 
-            if path.split(".")[-1] in ["png", "jpg", "jpeg"]: #TODO transfer this check to create function
+            if path.split(".")[-1] in [
+                "png",
+                "jpg",
+                "jpeg",
+            ]:  # TODO transfer this check to create function
                 create("image", IMAGE_ID, os.path.join(dir_path, path))
-                IMAGE_ID += 1 #TODO Add kitty cats
+                IMAGE_ID += 1  # TODO Add kitty cats
 
-            elif path.split(".")[-1] in ["mp4", "mkv"]: #TODO transfer this check to create function
+            elif path.split(".")[-1] in [
+                "mp4",
+                "mkv",
+            ]:  # TODO transfer this check to create function
                 create("video", VIDEO_ID, video, title=video)
 
                 VIDEO_ID += 1
@@ -53,8 +60,8 @@ look(dir_path, images, videos)
 
 def create(type, id, file, title=""):
     if title == "":
-        title = f'{type}_{id}'
-    item = create_data(type, 'Unknown', title, file)
+        title = f"{type}_{id}"
+    item = create_data(type, "Unknown", title, file)
 
     new_path = file.split("/").replace(file.split(".")[-2], item.itemId)
     ids.append(new_path)
