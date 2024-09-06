@@ -1,4 +1,4 @@
-class item():
+class item:
     def __init__(self, itemId, type, owner, title, path):
         self.itemId = itemId
         self.type = type
